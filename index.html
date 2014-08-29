@@ -15,12 +15,24 @@
 
         // Cordova is ready to be used!
         //
-        function onDeviceReady() {
-            alert('device is ready now');
-            pictureSource=navigator.camera.PictureSourceType;
-            destinationType=navigator.camera.DestinationType;
-        }
+        alert('device is ready now');
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
 
+        function onPhotoURISuccess(imageURI) {
+            alert(imageURI);
+            //
+            var largeImage = document.getElementById('largeImage');
+
+            // Unhide image elements
+            //
+            largeImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            largeImage.src = imageURI;
+        }
         // Called when a photo is successfully retrieved
         //
         function onPhotoDataSuccess(imageData) {
@@ -66,8 +78,7 @@
         // A button will call this function
         //
         function getPhoto(source) {
-            alert(source);
-            navigator.camera.getPicture(uploadPhoto, onFail, { quality: 20,
+            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 20,
                 destinationType: destinationType.FILE_URI,
                 sourceType: source });
         }
