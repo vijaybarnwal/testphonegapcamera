@@ -16,6 +16,7 @@
         // Cordova is ready to be used!
         //
         function onDeviceReady() {
+            console.log('here in device ready');
             pictureSource = navigator.camera.PictureSourceType;
             destinationType = navigator.camera.DestinationType;
         }
@@ -28,6 +29,7 @@
 
             // Get image handle
             //
+            console.log('here in image data',imageData);
             var smallImage = document.getElementById('smallImage');
 
             // Unhide image elements
@@ -48,6 +50,7 @@
 
             // Get image handle
             //
+            console.log('imageuri is==',imageURI);
             var largeImage = document.getElementById('largeImage');
 
             // Unhide image elements
@@ -71,6 +74,7 @@
         // A button will call this function
         //
         function capturePhotoEdit() {
+            console.log('here in edit photo');
             // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
             navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
                 destinationType: destinationType.DATA_URL });
@@ -79,6 +83,7 @@
         // A button will call this function
         //
         function getPhoto(source) {
+            console.log('get photo from camera',source);
             // Retrieve image file location from specified source
             navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
                 destinationType: destinationType.FILE_URI,
