@@ -15,9 +15,12 @@
 
         // Cordova is ready to be used!
         //
-        alert('device is ready now');
-        pictureSource=navigator.camera.PictureSourceType;
-        destinationType=navigator.camera.DestinationType;
+        function onDeviceReady(){
+            alert('device is ready now');
+            pictureSource=navigator.camera.PictureSourceType;
+            destinationType=navigator.camera.DestinationType;
+        }
+
 
         function onPhotoURISuccess(imageURI) {
             alert(imageURI);
