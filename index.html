@@ -66,6 +66,7 @@
         // A button will call this function
         //
         function getPhoto(source) {
+            alert(source);
             navigator.camera.getPicture(uploadPhoto, onFail, { quality: 20,
                 destinationType: destinationType.FILE_URI,
                 sourceType: source });
