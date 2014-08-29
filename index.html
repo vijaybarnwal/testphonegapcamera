@@ -1,11 +1,17 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-  <head>
-    <title>Capture Photo</title>
+<head>
+    <title>File Transfer Example</title>
 
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
     <script type="text/javascript" charset="utf-8">
 
+        // Wait for Cordova to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // Cordova is ready
+        //
         function onDeviceReady() {
 
             // Retrieve image file location from specified source
@@ -21,10 +27,12 @@
         function uploadPhoto(imageURI) {
             var options = new FileUploadOptions();
             options.fileKey="file";
-            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1)+'.png';
-            options.mimeType="text/plain";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
 
             var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
 
             options.params = params;
 
@@ -45,14 +53,9 @@
         }
 
     </script>
-  </head>
-  <body>
-    <span><input type='file' id='camera' accept="image/*;capture=camera"/>HTML</span>
-    <button onclick="capturePhoto();">Capture Photo</button> <br>
-    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
-    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
-    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;" id="largeImage" src="" />
-  </body>
+</head>
+<body>
+<h1>Example</h1>
+<p>Upload File</p>
+</body>
 </html>
