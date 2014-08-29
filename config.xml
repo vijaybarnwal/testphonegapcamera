@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.storehippo.mso"
+        versionCode="com.storehippo.mso"
+        versionM   = "1.0.0">
+    <name>MSO </name>
+    <description>
+        Medical Second Opinions
+    </description>
+    <author email="pawan.kumar@manusis.com" href="http://cordova.io">
+        Pawan Singh
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <gap:platform name="android" />
+    <gap:platform name="ios" />
+    <gap:platform name="winphone" />
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="default" />
+    <preference name="android-windowSoftInputMode" value="adjustResize" />
+    <preference name="fullscreen" value="false" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="android-minSdkVersion" value="7" />
+    <preference name="KeepRunning" value="false"/>
+    <preference name="LoadUrlTimeoutValue" value="10000"/>
+    <preference name="android-installLocation" value="auto" />
+
+    <icon src="icon.png" />
+    <gap:splash src="splash.png" />
+    <gap:plugin name="org.apache.cordova.contacts" version="0.2.9" />
+    <gap:plugin name="org.apache.cordova.camera"/>
+    <gap:plugin name="nl.x-services.plugins.socialsharing" version="4.0.8" />
+    <icon src="icons/ios/reader-57-1.png" gap:platform="ios" width="57" height="57" />
+    <icon src="icons/ios/reader-72-1.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icons/ios/reader-76-1.png" gap:platform="ios" width="76" height="76" />
+    <icon src="icons/ios/reader-114-1.png" gap:platform="ios" width="114" height="114" />
+    <icon src="icons/ios/reader-120-1.png" gap:platform="ios" width="120" height="120" />
+    <icon src="icons/ios/reader-144-1.png" gap:platform="ios" width="144" height="144" />
+    <icon src="icons/ios/reader-152-1.png" gap:platform="ios" width="152" height="152" />
+    <gap:splash src="splash/ios/Default.png" gap:platform="ios" width="1024" height="768" />
+    <gap:splash src="splash/ios/Default-Portrait.png" gap:platform="ios" width="768" height="1024" />
+    <gap:splash src="splash/ios/Default@2x.png" gap:platform="ios" width="2048" height="1536" />
+    <gap:splash src="splash/ios/Default-Portrait@2x.png" gap:platform="ios" width="1536" height="2048" />
+    <gap:splash src="splash/ios/Default-568h@2x.png" gap:platform="ios" width="1536" height="2048" />
+
+
+    <icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+
+
+</widget>
