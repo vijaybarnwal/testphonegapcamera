@@ -45,24 +45,32 @@
         // Called when a photo is successfully retrieved
         //
         function onPhotoURISuccess(imageURI) {
-            // Uncomment to view the image file URI
-            // console.log(imageURI);
+            console.log(imageURI);
+            var options = new FileUploadOptions();
+            options.fileKey="file";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
 
-            // Get image handle
-            //
-            console.log('imageuri is==',imageURI);
-            var largeImage = document.getElementById('largeImage');
+            var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
 
-            // Unhide image elements
-            //
-            largeImage.style.display = 'block';
+            options.params = params;
 
-            // Show the captured photo
-            // The inline CSS rules are used to resize the image
-            //
-            largeImage.src = imageURI;
+            var ft = new FileTransfer();
+            ft.upload(imageURI, encodeURI("http://s1.storehippo.com:5010/ms/uploads"), win, fail, options);
+        }
+        function win(r) {
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
         }
 
+        function fail(error) {
+            alert("An error has occurred: Code = " + error.code);
+            console.log("upload error source " + error.source);
+            console.log("upload error target " + error.target);
+        }
         // A button will call this function
         //
         function capturePhoto() {
