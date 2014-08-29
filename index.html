@@ -3,17 +3,18 @@
 <head>
     <title>File Transfer Example</title>
 
-    <script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
 
         // Wait for Cordova to load
         //
-        document.addEventListener("deviceready", onDeviceReady, false);
+        document.addEventListener("deviceready", function(){
+            alert('I am on device ready');
+        }, false);
 
         // Cordova is ready
         //
-        function onDeviceReady() {
-            alert('I am on device ready');
+        function uploadImage() {
             // Retrieve image file location from specified source
             navigator.camera.getPicture(uploadPhoto,
                     function (message) {
@@ -58,7 +59,6 @@
 </head>
 <body>
 <h1>Example</h1>
-
-<p>Upload File</p>
+<button onclick="uploadImage()" >Upload File</button>
 </body>
 </html>
