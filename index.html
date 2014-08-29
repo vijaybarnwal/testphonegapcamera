@@ -1,37 +1,40 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-    <title>File Transfer Example</title>
+    <title>Capture Photo</title>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
 
-        // Wait for Cordova to load
-        //
-        document.addEventListener("deviceready", function(){
-            alert('I am on device ready');
-        }, false);
+        var pictureSource;   // picture source
+        var destinationType; // sets the format of returned value
 
-        // Cordova is ready
+        // Wait for Cordova to connect with the device
         //
-        function uploadImage() {
-            // Retrieve image file location from specified source
-            navigator.camera.getPicture(uploadPhoto,
-                    function (message) {
-                        alert('get picture failed');
-                    },
-                    { quality: 50,
-                        destinationType: navigator.camera.DestinationType.FILE_URI,
-                        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY }
-            );
+        document.addEventListener("deviceready",onDeviceReady,false);
 
+        // Cordova is ready to be used!
+        //
+        function onDeviceReady() {
+            alert('device is ready now');
+            pictureSource=navigator.camera.PictureSourceType;
+            destinationType=navigator.camera.DestinationType;
+        }
+
+        // Called when a photo is successfully retrieved
+        //
+        function onPhotoDataSuccess(imageData) {
+            var smallImage = document.getElementById('smallImage');
+            smallImage.style.display = 'block';
+            smallImage.src = "data:image/jpeg;base64," + imageData;
         }
 
         function uploadPhoto(imageURI) {
+            alert(imageURI);
             var options = new FileUploadOptions();
-            options.fileKey = "file";
-            options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-            options.mimeType = "image/jpeg";
+            options.fileKey="file";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
 
             var params = new Object();
             params.value1 = "test";
@@ -40,11 +43,10 @@
             options.params = params;
 
             var ft = new FileTransfer();
-            ft.upload(imageURI, encodeURI("http://s1.storehippo.com:5010/ms/upload"), win, fail, options);
+            ft.upload(imageURI, encodeURI("http://s1.storehippo.com:5010/ms/uploads"), win, fail, options);
         }
-
         function win(r) {
-            aler("Code = " + r.responseCode);
+            alert("Code = " + r.responseCode);
             alert("Response = " + r.response);
             alert("Sent = " + r.bytesSent);
         }
@@ -54,11 +56,32 @@
             alert("upload error source " + error.source);
             alert("upload error target " + error.target);
         }
+        // A button will call this function
+        //
+        function capturePhotoEdit() {
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+                destinationType: destinationType.DATA_URL });
+        }
+
+        // A button will call this function
+        //
+        function getPhoto(source) {
+            navigator.camera.getPicture(uploadPhoto, onFail, { quality: 20,
+                destinationType: destinationType.FILE_URI,
+                sourceType: source });
+        }
+
+        // Called if something bad happens.
+        //
+        function onFail(message) {
+            alert('Failed because: ' + message);
+        }
 
     </script>
 </head>
 <body>
-<h1>Example</h1>
-<button onclick="uploadImage()" >Upload File</button>
+<button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
 </body>
 </html>
