@@ -3,7 +3,7 @@
 <head>
     <title>Capture Photo</title>
 
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
     <script type="text/javascript" charset="utf-8">
 
         var pictureSource;   // picture source
@@ -11,21 +11,44 @@
 
         // Wait for Cordova to connect with the device
         //
-        document.addEventListener("deviceready",onDeviceReady,false);
+        document.addEventListener("deviceready", onDeviceReady, false);
 
         // Cordova is ready to be used!
         //
-        function onDeviceReady(){
-            alert('device is ready now');
-            pictureSource=navigator.camera.PictureSourceType;
-            destinationType=navigator.camera.DestinationType;
+        function onDeviceReady() {
+            pictureSource = navigator.camera.PictureSourceType;
+            destinationType = navigator.camera.DestinationType;
         }
 
+        // Called when a photo is successfully retrieved
+        //
+        function onPhotoDataSuccess(imageData) {
+            // Uncomment to view the base64 encoded image data
+            // console.log(imageData);
 
-        function onPhotoURISuccess(imageURI) {
-            alert(imageURI);
+            // Get image handle
             //
-            var largeImage = document.getElementById('smallImage');
+            var smallImage = document.getElementById('smallImage');
+
+            // Unhide image elements
+            //
+            smallImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            smallImage.src = "data:image/jpeg;base64," + imageData;
+        }
+
+        // Called when a photo is successfully retrieved
+        //
+        function onPhotoURISuccess(imageURI) {
+            // Uncomment to view the image file URI
+            // console.log(imageURI);
+
+            // Get image handle
+            //
+            var largeImage = document.getElementById('largeImage');
 
             // Unhide image elements
             //
@@ -36,45 +59,19 @@
             //
             largeImage.src = imageURI;
         }
-        // Called when a photo is successfully retrieved
+
+        // A button will call this function
         //
-        function onPhotoDataSuccess(imageData) {
-            alert(imageData);
-            var smallImage = document.getElementById('smallImage');
-            smallImage.style.display = 'block';
-            smallImage.src = "data:image/jpeg;base64," + imageData;
+        function capturePhoto() {
+            // Take picture using device camera and retrieve image as base64-encoded string
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+                destinationType: destinationType.DATA_URL });
         }
 
-        function uploadPhoto(imageURI) {
-            alert(imageURI);
-            var options = new FileUploadOptions();
-            options.fileKey="file";
-            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
-            options.mimeType="image/jpeg";
-
-            var params = new Object();
-            params.value1 = "test";
-            params.value2 = "param";
-
-            options.params = params;
-
-            var ft = new FileTransfer();
-            ft.upload(imageURI, encodeURI("http://s1.storehippo.com:5010/ms/uploads"), win, fail, options);
-        }
-        function win(r) {
-            alert("Code = " + r.responseCode);
-            alert("Response = " + r.response);
-            alert("Sent = " + r.bytesSent);
-        }
-
-        function fail(error) {
-            alert("An error has occurred: Code = " + error.code);
-            alert("upload error source " + error.source);
-            alert("upload error target " + error.target);
-        }
         // A button will call this function
         //
         function capturePhotoEdit() {
+            // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
             navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
                 destinationType: destinationType.DATA_URL });
         }
@@ -82,7 +79,8 @@
         // A button will call this function
         //
         function getPhoto(source) {
-            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 20,
+            // Retrieve image file location from specified source
+            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
                 destinationType: destinationType.FILE_URI,
                 sourceType: source });
         }
@@ -96,8 +94,15 @@
     </script>
 </head>
 <body>
-<button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
-<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library1</button><br>
-<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+<button onclick="capturePhoto();">Capture Photo</button>
+<br>
+<button onclick="capturePhotoEdit();">Capture Editable Photo</button>
+<br>
+<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button>
+<br>
+<button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button>
+<br>
+<img style="display:none;width:60px;height:60px;" id="smallImage" src=""/>
+<img style="display:none;" id="largeImage" src=""/>
 </body>
 </html>
